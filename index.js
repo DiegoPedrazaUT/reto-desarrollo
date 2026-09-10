@@ -15,6 +15,9 @@ app.use('/api/videojuegos', videojuegosRoutes);7
 const puntuacionesRoutes = require('./routes/puntuaciones');
 app.use('/api/puntuaciones', puntuacionesRoutes);
 
+const estadisticasRoutes = require('./routes/estadisticas');
+app.use('/api/estadisticas', estadisticasRoutes);
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor conectado en el puerto ${PORT}`);
