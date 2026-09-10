@@ -10,7 +10,10 @@ const jugadoresRoutes = require('./routes/jugadores');
 app.use('/api/jugadores', jugadoresRoutes);
 
 const videojuegosRoutes = require('./routes/videojuegos');
-app.use('/api/videojuegos', videojuegosRoutes);
+app.use('/api/videojuegos', videojuegosRoutes);7
+
+const puntuacionesRoutes = require('./routes/puntuaciones');
+app.use('/api/puntuaciones', puntuacionesRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
