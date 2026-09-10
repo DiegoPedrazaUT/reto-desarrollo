@@ -9,6 +9,9 @@ app.use(express.json()); // Middleware para procesar JSON del body
 const jugadoresRoutes = require('./routes/jugadores');
 app.use('/api/jugadores', jugadoresRoutes);
 
+const videojuegosRoutes = require('./routes/videojuegos');
+app.use('/api/videojuegos', videojuegosRoutes);
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor conectado en el puerto ${PORT}`);
