@@ -22,10 +22,10 @@ router.post('/', async (req, res) => {
             id: result.insertId 
         });
     } catch (error) {
-        // Capturar el error de la base de datos si el gamertag ya existe (restricción uq_jugadores_gamertag)
         if (error.code === 'ER_DUP_ENTRY') {
             return res.status(409).json({ error: 'Error: El gamertag ya está registrado en el torneo.' });
         }
+        console.error("ERROR REAL DE MYSQL:", error); 
         res.status(500).json({ error: 'Error interno del servidor al registrar el jugador.' });
     }
 });
