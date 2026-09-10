@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import ModalJugador from './components/modal/ModalJugador';
 
 function App() {
   // Estado para controlar qué modal está abierto (null = ninguno)
@@ -9,7 +10,7 @@ function App() {
     <main className="app-container">
       <header className="header">
         <h1>Torneo Express</h1>
-        
+
         <nav className="nav-buttons">
           <button onClick={() => setModalActivo('jugador')}>
             Registrar Jugador
@@ -30,28 +31,11 @@ function App() {
           <p>[Espacio reservado para la Tabla de Clasificación]</p>
         </div>
       </section>
-
-      {/* Renderizado condicional de los Modales */}
-      {modalActivo && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h3>
-              {modalActivo === 'jugador' && 'Formulario: Nuevo Jugador'}
-              {modalActivo === 'videojuego' && 'Formulario: Nuevo Videojuego'}
-              {modalActivo === 'puntuacion' && 'Formulario: Nueva Puntuación'}
-            </h3>
-            
-            {/* Aquí importaremos los componentes de UI exactos para cada formulario */}
-            <div className="placeholder-formulario">
-               <p>Los campos de registro se renderizarán aquí.</p>
-            </div>
-            
-            <button className="btn-cerrar" onClick={() => setModalActivo(null)}>
-              Cerrar
-            </button>
-          </div>
-        </div>
+      
+      {modalActivo === 'jugador' && (
+        <ModalJugador onClose={() => setModalActivo(null)} />
       )}
+
     </main>
   )
 }

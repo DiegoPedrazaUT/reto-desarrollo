@@ -139,3 +139,55 @@ button:hover {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* =========================================
+   FORMULARIOS
+   ========================================= */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.campo label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.campo input {
+  padding: 0.7rem 1rem;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-size: 1rem;
+  outline: none;
+  transition: var(--transition);
+}
+
+.campo input:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+.acciones-form {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.btn-guardar {
+  background-color: #10b981; /* Verde para confirmar éxito */
+}
+
+.btn-guardar:hover {
+  background-color: #059669;
+}
