@@ -4,6 +4,7 @@ import ModalJugador from './components/modal/ModalJugador';
 import ModalVideojuego from './components/modal/ModalVideojuego';
 import ModalPuntuaciones from './components/modal/ModalPuntuaciones';
 import TablaClasificacion from './components/Ranking/TablaClasificacion';
+import PanelEstadisticas from './components/Estadisticas/PanelEstadisticas';
 
 function App() {
   // Estado para controlar qué modal está abierto (null = ninguno)
@@ -26,6 +27,8 @@ function App() {
           </button>
         </nav>
       </header>
+
+      <PanelEstadisticas />
 
       <section className="ranking-section">
         <h2>Clasificación General</h2>
