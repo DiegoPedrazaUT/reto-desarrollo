@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './App.css'
 import ModalJugador from './components/modal/ModalJugador';
+import ModalVideojuego from './components/modal/ModalVideojuego';
+import ModalPuntuaciones from './components/modal/ModalPuntuaciones';
 
 function App() {
   // Estado para controlar qué modal está abierto (null = ninguno)
@@ -34,6 +36,14 @@ function App() {
       
       {modalActivo === 'jugador' && (
         <ModalJugador onClose={() => setModalActivo(null)} />
+      )}
+      
+      {modalActivo === 'videojuego' && (
+        <ModalVideojuego onClose={() => setModalActivo(null)} />
+      )}
+
+      {modalActivo === 'puntuacion' && (
+        <ModalPuntuaciones onClose={() => setModalActivo(null)} />
       )}
 
     </main>

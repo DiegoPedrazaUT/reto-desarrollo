@@ -191,3 +191,44 @@ button:hover {
 .btn-guardar:hover {
   background-color: #059669;
 }
+
+/* =========================================
+   AUTOCOMPLETADO Y BUSCADORES
+   ========================================= */
+.relativo {
+  position: relative;
+}
+
+.lista-resultados {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius);
+  margin: 0.2rem 0 0 0;
+  padding: 0;
+  list-style: none;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 10;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+}
+
+.lista-resultados li {
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  color: var(--text-primary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: var(--transition);
+}
+
+.lista-resultados li:last-child {
+  border-bottom: none;
+}
+
+.lista-resultados li:hover {
+  background-color: var(--accent-color);
+  color: white;
+}
