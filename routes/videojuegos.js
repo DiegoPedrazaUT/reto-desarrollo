@@ -27,4 +27,16 @@ router.post('/', async (req, res) => {
     }
 });
 
+
+
+router.get('/', async (req, res) => {
+    try {
+        // Consulta sencilla para alimentar el formulario del Frontend
+        const [videojuegos] = await pool.query('SELECT id, nombre, genero FROM videojuegos');
+        return res.status(200).json(videojuegos);
+    } catch (error) {
+        res.status(500).json({ error: 'Error interno al consultar los videojuegos.' });
+    }
+});
+
 module.exports = router;
