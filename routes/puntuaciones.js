@@ -35,4 +35,25 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.get('/', async (req, res) => {
+    try {
+        // RF06: Consulta con JOIN para cruzar datos y ordenar de mayor a menor
+        const [ranking] = await pool.query(`
+            SELECT 
+                j.gamertag AS jugador, 
+                v.nombre AS videojuego, 
+                p.puntuacion 
+            FROM puntuaciones p
+            INNER JOIN jugadores j ON p.jugador_id = j.id
+            INNER JOIN videojuegos v ON p.videojuego_id = v.id
+            ORDER BY p.puntuacion DESC
+        `);
+        
+        return res.status(200).json(ranking);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error interno al consultar el ranking.' });
+    }
+});
+
 module.exports = router;
