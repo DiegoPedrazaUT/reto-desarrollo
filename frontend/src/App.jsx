@@ -3,6 +3,7 @@ import './App.css'
 import ModalJugador from './components/modal/ModalJugador';
 import ModalVideojuego from './components/modal/ModalVideojuego';
 import ModalPuntuaciones from './components/modal/ModalPuntuaciones';
+import TablaClasificacion from './components/Ranking/TablaClasificacion';
 
 function App() {
   // Estado para controlar qué modal está abierto (null = ninguno)
@@ -30,7 +31,7 @@ function App() {
         <h2>Clasificación General</h2>
         {/* Aquí importaremos el componente de la tabla para mostrar la clasificación ordenada de mayor a menor */}
         <div className="placeholder-tabla">
-          <p>[Espacio reservado para la Tabla de Clasificación]</p>
+          <TablaClasificacion />
         </div>
       </section>
       

@@ -232,3 +232,95 @@ button:hover {
   background-color: var(--accent-color);
   color: white;
 }
+
+/* =========================================
+   TABLA DE CLASIFICACIÓN Y BÚSQUEDA
+   ========================================= */
+.contenedor-clasificacion {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.barra-busqueda input {
+  width: 100%;
+  padding: 0.8rem 1.2rem;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-size: 1rem;
+  outline: none;
+  transition: var(--transition);
+}
+
+.barra-busqueda input:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+.tabla-responsive {
+  overflow-x: auto;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tabla-ui {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  background-color: var(--bg-card);
+}
+
+.tabla-ui th {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tabla-ui td {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.95rem;
+}
+
+.tabla-ui tr:last-child td {
+  border-bottom: none;
+}
+
+.tabla-ui tr:hover td {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Jerarquía visual en columnas */
+.col-posicion {
+  font-weight: bold;
+  color: var(--text-secondary);
+}
+
+.col-destacada {
+  font-weight: 600;
+  color: var(--accent-color);
+}
+
+.col-secundaria {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.col-puntuacion {
+  font-weight: 700;
+  color: #10b981; /* Verde para destacar los puntos */
+}
+
+.sin-resultados {
+  text-align: center;
+  padding: 3rem !important;
+  color: var(--text-secondary);
+  font-style: italic;
+}
