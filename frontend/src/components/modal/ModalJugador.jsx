@@ -2,10 +2,31 @@ import React from 'react';
 
 export default function ModalJugador({ onClose }) {
   // Función temporal para evitar que el form recargue la página
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Enviando datos del jugador...");
-    // Aquí conectaremos con el servicio más adelante
+    
+    // Captura los datos del formulario automáticamente
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+
+    try {
+      const response = await fetch('http://localhost:3000/api/jugadores', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      
+      const result = await response.json();
+      
+      if (response.ok) {
+        alert(result.mensaje); // Éxito
+        onClose(); // Cierra el modal
+      } else {
+        alert(result.error); // Muestra error (ej. Gamertag duplicado)
+      }
+    } catch (error) {
+      console.error("Error de red:", error);
+    }
   };
 
   return (

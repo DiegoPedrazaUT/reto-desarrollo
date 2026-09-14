@@ -1,10 +1,29 @@
 import React from 'react';
 
 export default function ModalVideojuego({ onClose }) {
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Enviando datos del videojuego...");
-    // Pendiente: Conexión con el backend para validar que no existan nombres duplicados
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+
+    try {
+      const response = await fetch('http://localhost:3000/api/videojuegos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      
+      const result = await response.json();
+      
+      if (response.ok) {
+        alert(result.mensaje); // Éxito
+        onClose();
+      } else {
+        alert(result.error); // Error (ej. Nombre duplicado)
+      }
+    } catch (error) {
+      console.error("Error al registrar videojuego:", error);
+    }
   };
 
   return (

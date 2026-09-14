@@ -1,32 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function PanelEstadisticas() {
-  // Datos simulados temporales (más adelante se calcularán con la información de MySQL)
-  const stats = {
-    totalJugadores: 15,
-    totalVideojuegos: 8,
-    totalPuntuaciones: 42,
-    promedio: 785
-  };
+  const [stats, setStats] = useState({
+    total_jugadores: 0,
+    total_videojuegos: 0,
+    total_puntuaciones: 0,
+    promedio_puntuacion: 0
+  });
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/estadisticas')
+      .then(res => res.json())
+      .then(data => setStats(data))
+      .catch(err => console.error("Error al cargar estadísticas:", err));
+  }, []);
 
   return (
     <div className="panel-estadisticas">
-      <div className="tarjeta-stat">
-        <span className="stat-label">Jugadores Totales</span>
-        <span className="stat-valor">{stats.totalJugadores}</span>
-      </div>
-      <div className="tarjeta-stat">
-        <span className="stat-label">Videojuegos</span>
-        <span className="stat-valor">{stats.totalVideojuegos}</span>
-      </div>
-      <div className="tarjeta-stat">
-        <span className="stat-label">Puntuaciones Registradas</span>
-        <span className="stat-valor">{stats.totalPuntuaciones}</span>
-      </div>
-      <div className="tarjeta-stat">
-        <span className="stat-label">Puntuación Promedio</span>
-        <span className="stat-valor">{stats.promedio}</span>
-      </div>
+      {/* Actualiza las variables para que coincidan con la respuesta del backend */}
+      <div className="tarjeta-stat"><span>Jugadores</span><span>{stats.total_jugadores}</span></div>
+      <div className="tarjeta-stat"><span>Videojuegos</span><span>{stats.total_videojuegos}</span></div>
+      <div className="tarjeta-stat"><span>Puntuaciones</span><span>{stats.total_puntuaciones}</span></div>
+      <div className="tarjeta-stat"><span>Promedio</span><span>{stats.promedio_puntuacion}</span></div>
     </div>
   );
 }
