@@ -32,11 +32,10 @@ router.post('/', async (req, res) => {
 
 
 router.get('/', async (req, res) => {
-    const { busqueda } = req.query; // Captura el parámetro de la URL (ej. ?busqueda=Felipe)
+    const { busqueda } = req.query; 
 
     try {
         if (busqueda) {
-            // RF07: Buscar coincidencias por nombre o gamertag
             const [jugadores] = await pool.query(
                 `SELECT id, nombre, gamertag, correo, fecha_registro 
                  FROM jugadores 
@@ -45,9 +44,8 @@ router.get('/', async (req, res) => {
             );
             return res.status(200).json(jugadores);
         } else {
-            // RF04: Consultar todos los jugadores registrados
             const [jugadores] = await pool.query(
-                'SELECT gamertag, correo, fecha_registro FROM jugadores'
+                'SELECT id, gamertag, correo, fecha_registro FROM jugadores'
             );
             return res.status(200).json(jugadores);
         }
