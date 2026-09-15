@@ -36,6 +36,7 @@ router.get('/', async (req, res) => {
 
     try {
         if (busqueda) {
+            // Consulta con filtro de búsqueda
             const [jugadores] = await pool.query(
                 `SELECT id, nombre, gamertag, correo, fecha_registro 
                  FROM jugadores 
@@ -45,7 +46,7 @@ router.get('/', async (req, res) => {
             return res.status(200).json(jugadores);
         } else {
             const [jugadores] = await pool.query(
-                'SELECT id, gamertag, correo, fecha_registro FROM jugadores'
+                'SELECT id, nombre, gamertag, correo, fecha_registro FROM jugadores'
             );
             return res.status(200).json(jugadores);
         }
