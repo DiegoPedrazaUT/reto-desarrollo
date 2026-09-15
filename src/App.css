@@ -1,54 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 /* =========================================
-   1. VARIABLES GLOBALES 
+   1. VARIABLES GLOBALES (Estilo Arcade Retro/Mate)
    ========================================= */
 :root {
-  --bg-main: #13151a;         
-  --bg-card: #1f222b;         
-  --text-primary: #f8f9fa;    
-  --text-secondary: #9ba1a6;  
-  --accent-color: #3b82f6;    
-  --accent-hover: #2563eb;
-  --danger-color: #ef4444;    
-  --border-radius: 10px;
-  --transition: all 0.2s ease-in-out;
+  /* Colores de la máquina física */
+  --arcade-cabinet-red: #b32424;
+  --arcade-cabinet-dark: #1a1a1a;
+  
+  /* Colores de la pantalla y datos */
+  --bg-screen: #1e1e24;       /* Gris oscuro de pantalla apagada */
+  --bg-card: #2a2a35;         /* Cajas de contenido */
+  --text-primary: #e0e0e0;    /* Blanco mate */
+  --text-secondary: #888899;  /* Gris retro */
+  
+  /* Acentos de videojuegos 8-bits */
+  --accent-yellow: #f4d03f;   /* Amarillo Pac-Man apagado */
+  --accent-blue: #5dade2;     /* Azul cielo 8-bits */
+  --success-green: #58d68d;   /* Verde vida/puntos */
+  --danger-red: #e74c3c;      /* Rojo Game Over */
+  
+  --border-radius: 0px;       /* 0px para todo: estilo bloques puros */
+  --font-pixel: 'Press Start 2P', monospace;
+  --transition: all 0.1s;     /* Transiciones casi instantáneas como en los 80s */
 }
 
 /* =========================================
-   2. ESTILOS BASE Y RESET
+   2. ESTILOS BASE Y EL "GABINETE"
    ========================================= */
 body {
   margin: 0;
-  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  background-color: var(--bg-main);
+  background-color: #000; /* Fondo detrás de la máquina */
   color: var(--text-primary);
+  font-family: var(--font-pixel);
+  font-size: 0.7rem; /* Esta fuente es muy ancha, se usa pequeña */
+  line-height: 1.5;
+  
+  /* Centramos la "máquina" en la pantalla del navegador */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden; /* Evita que el navegador baje, solo bajará la pantalla */
 }
 
-button {
-  background-color: var(--accent-color);
-  color: white;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  font-size: 0.95rem;
-  font-weight: 500;
-  border-radius: var(--border-radius);
-  cursor: pointer;
-  transition: var(--transition);
+/* Personalizamos la barra de scroll para que se vea retro */
+::-webkit-scrollbar { width: 12px; }
+::-webkit-scrollbar-track { background: var(--bg-screen); border-left: 2px solid var(--text-secondary); }
+::-webkit-scrollbar-thumb { background: var(--accent-yellow); border: 2px solid #000; }
+
+/* =========================================
+   3. LA PANTALLA CRT 
+   ========================================= */
+.app-container {
+  padding-top: 2rem;
+  width: 90vw;
+  max-width: 1000px;
+  height: 85vh; 
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: var(--bg-screen);
+  
+  border: 15px solid var(--arcade-cabinet-dark);
+  border-bottom: 25px solid var(--arcade-cabinet-dark);
+  box-shadow: 0 0 0 10px var(--arcade-cabinet-red), 0 0 30px rgba(0,0,0,0.8);
+  border-radius: 10px 10px 30px 30px; 
+  
+  position: relative;
+  overflow-y: auto; 
 }
 
-button:hover {
-  background-color: var(--accent-hover);
-  transform: translateY(-1px); /* Feedback visual sutil */
+.app-container::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+  background-size: 100% 4px;
+  z-index: 50;
+  pointer-events: none;
 }
 
 /* =========================================
-   3. ESTRUCTURA PRINCIPAL 
+   3.1. BOTONES Y CABECERA
    ========================================= */
-.app-container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
 .header {
   display: flex;
   justify-content: space-between;
@@ -57,14 +92,14 @@ button:hover {
   gap: 1.5rem;
   margin-bottom: 3rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 4px solid var(--text-secondary);
 }
 
 .header h1 {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   margin: 0;
-  font-weight: 600;
-  letter-spacing: -0.5px;
+  color: var(--accent-yellow);
+  text-transform: uppercase;
 }
 
 .nav-buttons {
@@ -72,8 +107,27 @@ button:hover {
   gap: 1rem;
 }
 
+button {
+  background-color: var(--arcade-cabinet-dark);
+  color: var(--text-primary);
+  border: 4px solid var(--text-primary);
+  padding: 0.8rem 1.2rem;
+  font-family: inherit;
+  font-size: 0.6rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 4px 4px 0px var(--text-secondary);
+}
+
+button:hover {
+  background-color: var(--text-primary);
+  color: var(--arcade-cabinet-dark);
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px var(--text-secondary);
+}
+
 /* =========================================
-   4. PANEL DE ESTADÍSTICAS (Dashboard)
+   4. PANEL DE ESTADÍSTICAS
    ========================================= */
 .panel-estadisticas {
   display: flex;
@@ -86,51 +140,32 @@ button:hover {
   flex: 1;
   background-color: var(--bg-card);
   padding: 1.5rem;
-  border-radius: var(--border-radius);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 4px solid var(--text-secondary);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  transition: var(--transition);
-}
-
-.tarjeta-stat:hover {
-  transform: translateY(-2px);
-  border-color: rgba(59, 130, 246, 0.3);
 }
 
 .stat-label {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
+  font-size: 0.6rem;
+  color: var(--accent-blue);
+  margin-bottom: 1rem;
 }
 
 .stat-valor {
-  font-size: 2rem;
-  font-weight: bold;
+  font-size: 1.5rem;
   color: var(--text-primary);
 }
 
 /* =========================================
-   5. TABLAS DE DATOS 
+   5. TABLAS DE DATOS Y CONTROLES
    ========================================= */
 .ranking-section h2 {
-  margin: 0; 
-  font-size: 1.4rem;
-  color: var(--text-secondary);
-}
-
-.ranking-section h2 {
-  margin-top: 0;
-  font-size: 1.4rem;
-  color: var(--text-secondary);
-  margin-bottom: 1.5rem;
+  margin: 0 0 1.5rem 0; 
+  font-size: 1rem;
+  color: var(--accent-yellow);
 }
 
 .encabezado-tablas {
@@ -142,119 +177,72 @@ button:hover {
   margin-bottom: 1.5rem;
 }
 
-.controles-tabla {
-  display: flex;
-  gap: 1rem;
-}
-
-.input-busqueda {
-  padding: 0.6rem 1.2rem;
-  min-width: 280px;
-  border-radius: var(--border-radius);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background-color: var(--bg-main);
+.input-busqueda, .selector-vista {
+  padding: 0.8rem;
+  border: 4px solid var(--text-secondary);
+  background-color: var(--arcade-cabinet-dark);
   color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.6rem;
   outline: none;
-  transition: var(--transition);
 }
 
-.input-busqueda:focus {
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
-}
-
-.selector-vista {
-  padding: 0.6rem 1.2rem;
-  border-radius: var(--border-radius);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background-color: var(--bg-card);
-  color: var(--text-primary);
-  font-weight: 500;
-  cursor: pointer;
-  outline: none;
-  transition: var(--transition);
-}
-
-.selector-vista:hover {
-  border-color: var(--accent-color);
-}
-
-.contenedor-clasificacion {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
+.input-busqueda:focus { border-color: var(--accent-yellow); }
 
 .tabla-responsive {
   overflow-x: auto;
-  border-radius: var(--border-radius);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 4px solid var(--text-secondary);
+  background-color: var(--bg-card);
 }
 
 .tabla-ui {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  background-color: var(--bg-card);
 }
 
 .tabla-ui th {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: var(--arcade-cabinet-dark);
   padding: 1rem;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  color: var(--text-secondary);
-  letter-spacing: 0.5px;
-  font-weight: 600;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.6rem;
+  color: var(--accent-blue);
+  border-bottom: 4px solid var(--text-secondary);
 }
 
 .tabla-ui td {
-  padding: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  font-size: 0.95rem;
+  padding: 1.2rem 1rem;
+  border-bottom: 2px dashed var(--text-secondary);
+  font-size: 0.6rem;
 }
 
-.tabla-ui tr:last-child td {
-  border-bottom: none;
-}
+.tabla-ui tr:last-child td { border-bottom: none; }
+.tabla-ui tr:hover td { background-color: rgba(255, 255, 255, 0.05); }
 
-.tabla-ui tr:hover td {
-  background-color: rgba(255, 255, 255, 0.02);
-}
-
-
-.col-posicion { font-weight: bold; color: var(--text-secondary); }
-.col-destacada { font-weight: 600; color: var(--accent-color); }
-.col-secundaria { color: var(--text-secondary); font-size: 0.85rem; }
-.col-puntuacion { font-weight: 700; color: #10b981; }
+.col-posicion { color: var(--text-secondary); }
+.col-destacada { color: var(--accent-yellow); }
+.col-secundaria { color: var(--text-secondary); }
+.col-puntuacion { color: var(--success-green); }
 
 .sin-resultados {
   text-align: center;
   padding: 3rem !important;
-  color: var(--text-secondary);
-  font-style: italic;
+  color: var(--danger-red);
 }
 
 .placeholder-tabla {
-  border: 2px dashed rgba(255, 255, 255, 0.1);
+  border: 4px dashed var(--text-secondary);
   padding: 3rem;
   text-align: center;
   color: var(--text-secondary);
-  border-radius: var(--border-radius);
 }
 
 /* =========================================
    6. MODALES 
    ========================================= */
 .modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(4px);
+  position: absolute; /* Cambiado de fixed a absolute para quedarse dentro de la pantalla */
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -264,130 +252,82 @@ button:hover {
 .modal-content {
   background-color: var(--bg-card);
   padding: 2.5rem;
-  border-radius: var(--border-radius);
-  width: 100%;
+  border: 4px solid var(--accent-yellow);
+  width: 90%;
   max-width: 450px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-  animation: modalFadeIn 0.3s ease-out forwards;
 }
 
 .modal-content h3 {
   margin-top: 0;
   margin-bottom: 1.5rem;
-  font-size: 1.3rem;
+  font-size: 1rem;
+  color: var(--accent-yellow);
 }
 
 .btn-cerrar {
-  background-color: transparent;
-  border: 1px solid var(--danger-color);
-  color: var(--danger-color);
-  width: 100%;
+  border-color: var(--danger-red);
+  color: var(--danger-red);
+  box-shadow: 4px 4px 0px var(--danger-red);
 }
 
 .btn-cerrar:hover {
-  background-color: var(--danger-color);
-  color: white;
-}
-
-@keyframes modalFadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  background-color: var(--danger-red);
+  color: var(--arcade-cabinet-dark);
+  box-shadow: 2px 2px 0px var(--arcade-cabinet-dark);
 }
 
 /* =========================================
    7. FORMULARIOS 
    ========================================= */
-.formulario {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-}
-
-.campo {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.campo label {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  font-weight: 500;
-}
+.formulario { display: flex; flex-direction: column; gap: 1.5rem; }
+.campo { display: flex; flex-direction: column; gap: 0.8rem; }
+.campo label { font-size: 0.6rem; color: var(--accent-blue); }
 
 .campo input {
-  padding: 0.7rem 1rem;
-  border-radius: var(--border-radius);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background-color: var(--bg-main);
-  color: var(--text-primary);
-  font-size: 1rem;
+  padding: 0.8rem;
+  border: 4px solid var(--text-secondary);
+  background-color: var(--arcade-cabinet-dark);
+  color: var(--success-green);
+  font-family: inherit;
+  font-size: 0.6rem;
   outline: none;
-  transition: var(--transition);
 }
 
-.campo input:focus {
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
-}
+.campo input:focus { border-color: var(--accent-yellow); }
 
 .acciones-form {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-  margin-top: 1.5rem;
+  display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem;
 }
 
 .btn-guardar {
-  background-color: #10b981;
+  color: var(--success-green);
+  border-color: var(--success-green);
+  box-shadow: 4px 4px 0px var(--success-green);
 }
 
 .btn-guardar:hover {
-  background-color: #059669;
-}
-
-.placeholder-formulario {
-  margin-bottom: 2rem;
-  color: var(--text-secondary);
+  background-color: var(--success-green);
+  color: var(--arcade-cabinet-dark);
+  box-shadow: 2px 2px 0px var(--arcade-cabinet-dark);
 }
 
 /* =========================================
    8. AUTOCOMPLETADO Y BUSCADORES DE MODAL
    ========================================= */
-.relativo {
-  position: relative;
-}
+.relativo { position: relative; }
 
 .lista-resultados {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background-color: var(--bg-card);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--border-radius);
-  margin: 0.2rem 0 0 0;
-  padding: 0;
-  list-style: none;
-  max-height: 150px;
-  overflow-y: auto;
-  z-index: 10;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  position: absolute; top: 100%; left: 0; right: 0;
+  background-color: var(--arcade-cabinet-dark);
+  border: 4px solid var(--accent-yellow);
+  margin: 0.2rem 0 0 0; padding: 0; list-style: none;
+  max-height: 150px; overflow-y: auto; z-index: 10;
 }
 
 .lista-resultados li {
-  padding: 0.7rem 1rem;
-  cursor: pointer;
-  color: var(--text-primary);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  transition: var(--transition);
+  padding: 1rem; cursor: pointer; color: var(--text-primary);
+  border-bottom: 2px dashed var(--text-secondary);
 }
 
-.lista-resultados li:last-child {
-  border-bottom: none;
-}
-
-.lista-resultados li:hover {
-  background-color: var(--accent-color);
-  color: white;
-}
+.lista-resultados li:last-child { border-bottom: none; }
+.lista-resultados li:hover { background-color: var(--accent-blue); color: #000; }
