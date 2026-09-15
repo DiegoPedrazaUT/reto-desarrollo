@@ -1,25 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function TablaJugadores({ busqueda }) {
-  // Datos simulados temporales.
-  const mockJugadores = [
-    { id: 1, gamertag: 'Shadow', nombre: 'Alex Mercer', correo: 'alex@ejemplo.com', fecha: '2026-09-09' },
-    { id: 2, gamertag: 'Nova', nombre: 'Sam Aran', correo: 'sam@ejemplo.com', fecha: '2026-09-08' },
-    { id: 3, gamertag: 'Ghost', nombre: 'Simon Riley', correo: 'simon@ejemplo.com', fecha: '2026-09-09' },
-  ];
+  const [jugadores, setJugadores] = useState([]);
 
-  // Lógica de filtrado por Nombre o Gamertag[cite: 1]
-  const datosFiltrados = mockJugadores.filter(jugador => 
-    jugador.nombre.toLowerCase().includes(busqueda.toLowerCase()) || 
-    jugador.gamertag.toLowerCase().includes(busqueda.toLowerCase())
-  );
+  useEffect(() => {
+    fetch('http://localhost:3000/api/jugadores')
+      .then(res => res.json())
+      .then(data => setJugadores(data))
+      .catch(err => console.error("Error al cargar la tabla:", err));
+  }, []);
+
+  // RF07: El filtro sigue buscando por nombre o gamertag internamente
+  const datosFiltrados = jugadores.filter(jugador => {
+    const nombre = jugador.nombre || ''; 
+    const gamertag = jugador.gamertag || '';
+    
+    return nombre.toLowerCase().includes(busqueda.toLowerCase()) || 
+           gamertag.toLowerCase().includes(busqueda.toLowerCase());
+  });
 
   return (
     <div className="tabla-responsive">
       <table className="tabla-ui">
         <thead>
           <tr>
-            {/* Solo las columnas exigidas en el RF04[cite: 1] */}
+            {/* RF04: Estrictamente 3 columnas */}
             <th>Gamertag</th>
             <th>Correo</th>
             <th>Fecha de Registro</th>
@@ -31,7 +36,7 @@ export default function TablaJugadores({ busqueda }) {
               <tr key={item.id}>
                 <td className="col-destacada">{item.gamertag}</td>
                 <td className="col-secundaria">{item.correo}</td>
-                <td>{item.fecha}</td>
+                <td>{item.fecha_registro.substring(0, 10)}</td> 
               </tr>
             ))
           ) : (
