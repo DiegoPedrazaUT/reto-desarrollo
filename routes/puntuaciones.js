@@ -39,13 +39,14 @@ router.get('/', async (req, res) => {
     try {
         const [ranking] = await pool.query(`
             SELECT 
+                j.nombre AS nombre,
                 j.gamertag AS jugador, 
                 v.nombre AS videojuego, 
                 SUM(p.puntuacion) AS puntuacion 
             FROM puntuaciones p
             INNER JOIN jugadores j ON p.jugador_id = j.id
             INNER JOIN videojuegos v ON p.videojuego_id = v.id
-            GROUP BY j.gamertag, v.nombre
+            GROUP BY j.nombre, j.gamertag, v.nombre
             ORDER BY puntuacion DESC
         `);
         
