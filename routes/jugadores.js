@@ -2,41 +2,12 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../db');
 
-router.post('/', async (req, res) => {
-    const { nombre, gamertag, correo } = req.body;
-
-    // Validación del backend requerida por el sistema
-    if (!nombre || !gamertag || !correo) {
-        return res.status(400).json({ error: 'Nombre, gamertag y correo son obligatorios.' });
-    }
-
-    try {
-        const [result] = await pool.query(
-            'INSERT INTO jugadores (nombre, gamertag, correo) VALUES (?, ?, ?)',
-            [nombre, gamertag, correo]
-        );
-        
-        // Mensaje claro de éxito para la interfaz
-        res.status(201).json({ 
-            mensaje: 'Jugador registrado exitosamente', 
-            id: result.insertId 
-        });
-    } catch (error) {
-        if (error.code === 'ER_DUP_ENTRY') {
-            return res.status(409).json({ error: 'Error: El gamertag ya está registrado en el torneo.' });
-        }
-        console.error("ERROR REAL DE MYSQL:", error); 
-        res.status(500).json({ error: 'Error interno del servidor al registrar el jugador.' });
-    }
-});
-
-
+// GET: Consultar todos los jugadores o buscar por coincidencia
 router.get('/', async (req, res) => {
     const { busqueda } = req.query; 
 
     try {
         if (busqueda) {
-            // Consulta con filtro de búsqueda
             const [jugadores] = await pool.query(
                 `SELECT id, nombre, gamertag, correo, fecha_registro 
                  FROM jugadores 
@@ -52,6 +23,64 @@ router.get('/', async (req, res) => {
         }
     } catch (error) {
         res.status(500).json({ error: 'Error interno al consultar los jugadores.' });
+    }
+});
+
+// POST: Registrar un nuevo jugador con validaciones estrictas
+router.post('/', async (req, res) => {
+    let { nombre, gamertag, correo } = req.body;
+
+    // Limpieza de datos
+    nombre = nombre?.trim();
+    gamertag = gamertag?.trim();
+    correo = correo?.trim();
+
+    // Validación de campos vacíos
+    if (!nombre || !gamertag || !correo) {
+        return res.status(400).json({ error: 'Nombre, gamertag y correo son obligatorios y no pueden estar vacíos.' });
+    }
+
+    // Validación de longitud
+    if (nombre.length > 100 || gamertag.length > 50 || correo.length > 150) {
+        return res.status(400).json({ error: 'Uno de los campos excede el límite de caracteres permitido.' });
+    }
+
+    // Validación de formato de correo
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(correo)) {
+        return res.status(400).json({ error: 'El formato del correo electrónico no es válido.' });
+    }
+
+    try {
+        // Buscar si el gamertag o el correo ya existen
+        const [duplicados] = await pool.query(
+            'SELECT gamertag, correo FROM jugadores WHERE gamertag = ? OR correo = ?',
+            [gamertag, correo]
+        );
+
+        if (duplicados.length > 0) {
+            const jugadorExistente = duplicados[0];
+            if (jugadorExistente.gamertag === gamertag) {
+                return res.status(409).json({ error: 'Error: El gamertag ya está registrado en el torneo.' });
+            }
+            if (jugadorExistente.correo === correo) {
+                return res.status(409).json({ error: 'Error: Este correo electrónico ya está en uso por otro jugador.' });
+            }
+        }
+
+        // Insertar el nuevo jugador
+        const [result] = await pool.query(
+            'INSERT INTO jugadores (nombre, gamertag, correo) VALUES (?, ?, ?)',
+            [nombre, gamertag, correo]
+        );
+        
+        res.status(201).json({ 
+            mensaje: 'Jugador registrado exitosamente', 
+            id: result.insertId 
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error interno del servidor al registrar el jugador.' });
     }
 });
 
