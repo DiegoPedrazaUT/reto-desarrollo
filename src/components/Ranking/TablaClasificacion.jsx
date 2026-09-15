@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-// 1. Recibe 'busqueda' como propiedad desde App.jsx
 export default function TablaClasificacion({ busqueda }) {
   const [datos, setDatos] = useState([]);
   
-  // Cargar el ranking desde MySQL al montar el componente
   useEffect(() => {
     fetch('http://localhost:3000/api/puntuaciones')
       .then(res => res.json())
@@ -12,23 +10,26 @@ export default function TablaClasificacion({ busqueda }) {
       .catch(err => console.error("Error al cargar ranking:", err));
   }, []);
 
-  // Aseguramos que 'busqueda' sea un string válido antes de filtrar
   const terminoBusqueda = busqueda || '';
 
-  // Filtrar por gamertag (jugador) o videojuego
-  const datosFiltrados = datos.filter(item => 
-    item.jugador.toLowerCase().includes(terminoBusqueda.toLowerCase()) || 
-    item.videojuego.toLowerCase().includes(terminoBusqueda.toLowerCase())
-  );
+  const datosFiltrados = datos.filter(item => {
+    const gamertag = item.jugador || '';
+    const nombre = item.nombreJugador || ''; 
+    const videojuego = item.videojuego || '';
+    const termino = terminoBusqueda.toLowerCase();
+
+    return gamertag.toLowerCase().includes(termino) || 
+           nombre.toLowerCase().includes(termino) || 
+           videojuego.toLowerCase().includes(termino);
+  });
 
   return (
     <div className="contenedor-clasificacion">
-      {/* SE ELIMINÓ LA BARRA DE BÚSQUEDA INTERNA PORQUE AHORA ESTÁ EN APP.JSX */}
-
       <div className="tabla-responsive">
         <table className="tabla-ui">
           <thead>
             <tr>
+              {/* Respetando estrictamente el RF06 */}
               <th>Posición</th>
               <th>Jugador (Gamertag)</th>
               <th>Videojuego</th>
