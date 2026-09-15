@@ -1,0 +1,393 @@
+/* =========================================
+   1. VARIABLES GLOBALES 
+   ========================================= */
+:root {
+  --bg-main: #13151a;         
+  --bg-card: #1f222b;         
+  --text-primary: #f8f9fa;    
+  --text-secondary: #9ba1a6;  
+  --accent-color: #3b82f6;    
+  --accent-hover: #2563eb;
+  --danger-color: #ef4444;    
+  --border-radius: 10px;
+  --transition: all 0.2s ease-in-out;
+}
+
+/* =========================================
+   2. ESTILOS BASE Y RESET
+   ========================================= */
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+}
+
+button {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+button:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px); /* Feedback visual sutil */
+}
+
+/* =========================================
+   3. ESTRUCTURA PRINCIPAL 
+   ========================================= */
+.app-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column; 
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header h1 {
+  font-size: 1.8rem;
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+/* =========================================
+   4. PANEL DE ESTADÍSTICAS (Dashboard)
+   ========================================= */
+.panel-estadisticas {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.tarjeta-stat {
+  flex: 1;
+  background-color: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: var(--transition);
+}
+
+.tarjeta-stat:hover {
+  transform: translateY(-2px);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.stat-valor {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--text-primary);
+}
+
+/* =========================================
+   5. TABLAS DE DATOS 
+   ========================================= */
+.ranking-section h2 {
+  margin: 0; 
+  font-size: 1.4rem;
+  color: var(--text-secondary);
+}
+
+.ranking-section h2 {
+  margin-top: 0;
+  font-size: 1.4rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.encabezado-tablas {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; 
+  gap: 1rem;      
+  margin-bottom: 1.5rem;
+}
+
+.controles-tabla {
+  display: flex;
+  gap: 1rem;
+}
+
+.input-busqueda {
+  padding: 0.6rem 1.2rem;
+  min-width: 280px;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  outline: none;
+  transition: var(--transition);
+}
+
+.input-busqueda:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+.selector-vista {
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+  transition: var(--transition);
+}
+
+.selector-vista:hover {
+  border-color: var(--accent-color);
+}
+
+.contenedor-clasificacion {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.tabla-responsive {
+  overflow-x: auto;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tabla-ui {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  background-color: var(--bg-card);
+}
+
+.tabla-ui th {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tabla-ui td {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.95rem;
+}
+
+.tabla-ui tr:last-child td {
+  border-bottom: none;
+}
+
+.tabla-ui tr:hover td {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+
+.col-posicion { font-weight: bold; color: var(--text-secondary); }
+.col-destacada { font-weight: 600; color: var(--accent-color); }
+.col-secundaria { color: var(--text-secondary); font-size: 0.85rem; }
+.col-puntuacion { font-weight: 700; color: #10b981; }
+
+.sin-resultados {
+  text-align: center;
+  padding: 3rem !important;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.placeholder-tabla {
+  border: 2px dashed rgba(255, 255, 255, 0.1);
+  padding: 3rem;
+  text-align: center;
+  color: var(--text-secondary);
+  border-radius: var(--border-radius);
+}
+
+/* =========================================
+   6. MODALES 
+   ========================================= */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: var(--bg-card);
+  padding: 2.5rem;
+  border-radius: var(--border-radius);
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+  animation: modalFadeIn 0.3s ease-out forwards;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+}
+
+.btn-cerrar {
+  background-color: transparent;
+  border: 1px solid var(--danger-color);
+  color: var(--danger-color);
+  width: 100%;
+}
+
+.btn-cerrar:hover {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================
+   7. FORMULARIOS 
+   ========================================= */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.campo label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.campo input {
+  padding: 0.7rem 1rem;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-size: 1rem;
+  outline: none;
+  transition: var(--transition);
+}
+
+.campo input:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+.acciones-form {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.btn-guardar {
+  background-color: #10b981;
+}
+
+.btn-guardar:hover {
+  background-color: #059669;
+}
+
+.placeholder-formulario {
+  margin-bottom: 2rem;
+  color: var(--text-secondary);
+}
+
+/* =========================================
+   8. AUTOCOMPLETADO Y BUSCADORES DE MODAL
+   ========================================= */
+.relativo {
+  position: relative;
+}
+
+.lista-resultados {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius);
+  margin: 0.2rem 0 0 0;
+  padding: 0;
+  list-style: none;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 10;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+}
+
+.lista-resultados li {
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  color: var(--text-primary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: var(--transition);
+}
+
+.lista-resultados li:last-child {
+  border-bottom: none;
+}
+
+.lista-resultados li:hover {
+  background-color: var(--accent-color);
+  color: white;
+}
