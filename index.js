@@ -3,9 +3,8 @@ const cors = require('cors');
 const app = express();
 
 app.use(cors());
-app.use(express.json()); // Middleware para procesar JSON del body
+app.use(express.json()); 
 
-// Aquí importaremos las rutas más adelante
 const jugadoresRoutes = require('./routes/jugadores');
 app.use('/api/jugadores', jugadoresRoutes);
 

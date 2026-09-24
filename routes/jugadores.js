@@ -26,33 +26,27 @@ router.get('/', async (req, res) => {
     }
 });
 
-// POST: Registrar un nuevo jugador con validaciones estrictas
 router.post('/', async (req, res) => {
     let { nombre, gamertag, correo } = req.body;
 
-    // Limpieza de datos
     nombre = nombre?.trim();
     gamertag = gamertag?.trim();
     correo = correo?.trim();
 
-    // Validación de campos vacíos
     if (!nombre || !gamertag || !correo) {
         return res.status(400).json({ error: 'Nombre, gamertag y correo son obligatorios y no pueden estar vacíos.' });
     }
 
-    // Validación de longitud
     if (nombre.length > 100 || gamertag.length > 50 || correo.length > 150) {
         return res.status(400).json({ error: 'Uno de los campos excede el límite de caracteres permitido.' });
     }
 
-    // Validación de formato de correo
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(correo)) {
         return res.status(400).json({ error: 'El formato del correo electrónico no es válido.' });
     }
 
     try {
-        // Buscar si el gamertag o el correo ya existen
         const [duplicados] = await pool.query(
             'SELECT gamertag, correo FROM jugadores WHERE gamertag = ? OR correo = ?',
             [gamertag, correo]
@@ -68,7 +62,6 @@ router.post('/', async (req, res) => {
             }
         }
 
-        // Insertar el nuevo jugador
         const [result] = await pool.query(
             'INSERT INTO jugadores (nombre, gamertag, correo) VALUES (?, ?, ?)',
             [nombre, gamertag, correo]
